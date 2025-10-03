@@ -26,9 +26,11 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     nom = models.CharField(max_length=100)
     prenom = models.CharField(max_length=100)
     date_naissance = models.DateField()
+    numero_telephone = models.CharField(max_length=20, null=True, blank=True)  # ➕ numéro tel
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='utilisateur')
     photo_de_profil = models.ImageField(upload_to='photos/', blank=True, null=True)
+    is_active = models.BooleanField(default=False)  # ➕ inactif par défaut
 
     objects = UtilisateurManager()
 
