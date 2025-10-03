@@ -1,0 +1,28 @@
+{% extends 'mail/base.html' %} {% block content %}
+<h2 class="text-2xl font-bold mb-4">Détail du message</h2>
+
+<div class="bg-white shadow-md rounded p-6 space-y-4">
+  <div><strong>Expéditeur:</strong> {{ message.expediteur }}</div>
+  <div><strong>Destinataire:</strong> {{ message.destinataire }}</div>
+  <div><strong>Sujet:</strong> {{ message.sujet }}</div>
+  <div><strong>Date:</strong> {{ message.date_envoi }}</div>
+  <div class="border-t pt-4">{{ message.contenu }}</div>
+  <!-- <button
+    class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    onclick="toggleRead({{ message.id_message }})"
+  >
+    {{ message.est_lu|yesno:"Marquer comme non lu,Marquer comme lu" }}
+  </button> -->
+</div>
+
+<script>
+  async function toggleRead(messageId) {
+    const response = await fetch(`/toggle_read/${messageId}/`, {
+      method: "POST",
+    });
+    const data = await response.json();
+    if (data.success) location.reload();
+    else alert("Erreur : " + data.error);
+  }
+</script>
+{% endblock %}

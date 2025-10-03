@@ -51,5 +51,29 @@
       <!-- Contenu spécifique de chaque page -->
       {% endblock %}
     </main>
+    <script>
+      // ⚡ Met à jour le badge de messages non lus
+      async function updateUnreadBadge() {
+        try {
+          const response = await fetch("/inbox/unread_count/");
+          if (!response.ok) throw new Error("Erreur API unread_count");
+          const data = await response.json();
+          const badge = document.getElementById("inbox-unread");
+          if (badge) {
+            badge.textContent = data.unread_count;
+            badge.classList.toggle("hidden", data.unread_count === 0);
+          }
+        } catch (err) {
+          console.error(
+            "Impossible de récupérer le nombre de messages non lus :",
+            err
+          );
+        }
+      }
+
+      // ⚡ Rafraîchit toutes les 30 secondes
+      updateUnreadBadge();
+      setInterval(updateUnreadBadge, 30000);
+    </script>
   </body>
 </html>

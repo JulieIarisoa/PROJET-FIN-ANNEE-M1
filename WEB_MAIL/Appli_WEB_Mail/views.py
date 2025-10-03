@@ -129,3 +129,24 @@ def acceuil(request):
 
 def base(request):
    return render(request, "base.html")
+
+def inbox_view(request):
+   return render(request, "inbox.html")
+
+def sent_view(request):
+   return render(request, "sent.html")
+
+def drafts_view(request):
+   return render(request, "drafts.html")
+
+def scheduled_view(request):
+   return render(request, "scheduled.html")
+
+def archive_view(request):
+   return render(request, "archive.html")
+
+def trash_view(request):
+   return render(request, "trash.html")
+
+def email_detail_view(request):
+   return render(request, "email_detail.html")

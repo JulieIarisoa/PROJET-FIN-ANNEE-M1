@@ -1,0 +1,36 @@
+{% extends 'mail/base.html' %}
+
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Corbeille</h2>
+
+<table class="min-w-full bg-white shadow-md rounded">
+  <thead>
+    <tr class="bg-gray-200">
+      <th class="py-2 px-4 text-left">Destinataire</th>
+      <th class="py-2 px-4 text-left">Sujet</th>
+      <th class="py-2 px-4 text-left">Date</th>
+    </tr>
+  </thead>
+  <tbody id="trash-table"></tbody>
+</table>
+
+<script>
+async function fetchTrash() {
+    const userId = 'U001';
+    const response = await fetch(`/trash/${userId}/`);
+    const messages = await response.json();
+    const tbody = document.getElementById('trash-table');
+    tbody.innerHTML = '';
+    messages.forEach(msg => {
+        tbody.innerHTML += `
+        <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="window.location='/email/${msg.id_message}/'">
+            <td class="py-2 px-4">${msg.destinataire}</td>
+            <td class="py-2 px-4">${msg.sujet}</td>
+            <td class="py-2 px-4">${msg.date_envoi}</td>
+        </tr>
+        `;
+    });
+}
+
+fetchTrash();
+</script>

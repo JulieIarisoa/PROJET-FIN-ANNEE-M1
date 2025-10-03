@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block content %}
+<h2 class="text-2xl font-bold mb-4">Inbox</h2>
+
+<table class="min-w-full bg-white shadow-md rounded">
+  <thead>
+    <tr class="bg-gray-200">
+      <th class="py-2 px-4 text-left">Expéditeur</th>
+      <th class="py-2 px-4 text-left">Sujet</th>
+      <th class="py-2 px-4 text-left">Date</th>
+      <th class="py-2 px-4 text-center">Statut</th>
+    </tr>
+  </thead>
+  <tbody id="inbox-table">
+    <!-- Les messages seront insérés ici via JS -->
+  </tbody>
+</table>
+
+<script>
+  async function fetchInbox() {
+    const response = await fetch("/inbox/");
+    const messages = await response.json();
+    const tbody = document.getElementById("inbox-table");
+    tbody.innerHTML = "";
+    messages.forEach((msg) => {
+      tbody.innerHTML += `
+        <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="window.location='/email/${
+          msg.id_message
+        }/'">
+            <td class="py-2 px-4">${msg.expediteur}</td>
+            <td class="py-2 px-4">${msg.sujet}</td>
+            <td class="py-2 px-4">${msg.date_envoi}</td>
+            <td class="py-2 px-4 text-center">
+                ${msg.est_lu ? "✅ Lu" : "📬 Non lu"}
+            </td>
+        </tr>
+        `;
+    });
+  }
+
+  async function fetchUnreadCount() {
+    const response = await fetch("/inbox/unread_count/");
+    const data = await response.json();
+    document.getElementById("inbox-unread").textContent = data.unread_count;
+  }
+
+  fetchInbox();
+  fetchUnreadCount();
+</script>
+{% endblock %}
