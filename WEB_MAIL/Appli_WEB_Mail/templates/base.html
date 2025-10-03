@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Webmail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md p-4 flex flex-col">
+      <h1 class="text-xl font-bold mb-6">WebMail</h1>
+
+      <nav class="flex flex-col space-y-2">
+        <a
+          href="/inbox/"
+          class="p-2 hover:bg-gray-200 rounded flex justify-between items-center"
+        >
+          <span>📩 Inbox</span>
+          <span
+            id="inbox-unread"
+            class="bg-red-500 text-white rounded-full px-2 text-sm"
+            >0</span
+          >
+        </a>
+        <a href="/sent/U001/" class="p-2 hover:bg-gray-200 rounded"
+          >📤 Envoyés</a
+        >
+        <a href="/drafts/U001/" class="p-2 hover:bg-gray-200 rounded"
+          >📝 Brouillons</a
+        >
+        <a href="/scheduled/U001/" class="p-2 hover:bg-gray-200 rounded"
+          >⏰ Planifiés</a
+        >
+        <a href="/archive/U001/" class="p-2 hover:bg-gray-200 rounded"
+          >📂 Archivés</a
+        >
+        <a href="/trash/U001/" class="p-2 hover:bg-gray-200 rounded"
+          >🗑️ Corbeille</a
+        >
+        <a
+          href="/compose/"
+          class="mt-4 p-2 bg-blue-500 text-white rounded text-center hover:bg-blue-600"
+          >✍️ Composer</a
+        >
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+      {% block content %}
+      <!-- Contenu spécifique de chaque page -->
+      {% endblock %}
+    </main>
+  </body>
+</html>

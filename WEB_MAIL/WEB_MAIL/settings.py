@@ -50,11 +50,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'WEB_MAIL.urls'
-
+#BASE_DIR / 'Appli_WEB_Mail' / 'templates'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-       'DIRS': [BASE_DIR / 'Appli_WEB_Mail' / 'templates'],
+       'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

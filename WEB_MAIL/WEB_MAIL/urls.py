@@ -21,8 +21,12 @@ from Appli_WEB_Mail import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+      # 🏠 Page d'accueil
+    path('', views.base, name="base"),
+
     # 🏠 Page d'accueil
-    path('', views.acceuil, name="acceuil"),
+    path('acceuil/', views.acceuil, name="acceuil"),
+    
 #*********************************URLS Fifi*************************************
     # 📩 Inbox
     path('inbox/', views.inbox_view, name="inbox"),
@@ -51,5 +55,16 @@ urlpatterns = [
 
     # 📑 Détail d’un email
     path('email/<int:message_id>/', views.email_detail_view, name="email_detail"),
+
+   
+# Fonctionnalité	                    Méthode HTTP	URL à tester dans Postman
+# Inbox (boîte Principale)	            GET	            http://127.0.0.1:8000/inbox/
+# Nombre de messages non lus	        GET	            http://127.0.0.1:8000/inbox/unread_count/
+# Messages envoyés d’un utilisateur	    GET	            http://127.0.0.1:8000/sent/<user_id>/ → exemple : http://127.0.0.1:8000/sent/U001/
+# Brouillons d’un utilisateur	        GET	            http://127.0.0.1:8000/drafts/<user_id>/
+# Messages planifiés	                GET	            http://127.0.0.1:8000/scheduled/<user_id>/
+# Messages archivés	                    GET	            http://127.0.0.1:8000/archive/<user_id>/
+# Messages corbeille	                GET	            http://127.0.0.1:8000/trash/<user_id>/
+# Marquer un message comme lu/non lu	POST ou GET	    http://127.0.0.1:8000/toggle_read/<message_id>/ → exemple : http://127.0.0.1:8000/toggle_read/M001/
 #******************************Fin URLS Fifi*************************************
 ]

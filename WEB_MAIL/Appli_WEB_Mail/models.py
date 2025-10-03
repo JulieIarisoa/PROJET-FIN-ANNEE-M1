@@ -1,6 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
+#Migration ou modification de la base de donnée
+#python manage.py makemigrations
+#python manage.py migrate
+
 class UtilisateurManager(BaseUserManager):
     def create_user(self, email, mot_de_passe=None, **extra_fields):
         if not email:

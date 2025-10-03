@@ -126,3 +126,6 @@ def email_detail_view(request, message_id):
 
 def acceuil(request):
    return render(request, "accueil.html")
+
+def base(request):
+   return render(request, "base.html")
