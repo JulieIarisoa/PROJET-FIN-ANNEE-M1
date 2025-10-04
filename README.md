@@ -1,10 +1,26 @@
+Parfait 👍 Ton guide est déjà très clair, mais je vais corriger et compléter certaines étapes (surtout la création du projet et l’activation de l’environnement virtuel) afin que ça fonctionne **à la fois sur Windows et Linux**.
+
+Voici la version corrigée et améliorée :
+
+---
+
 # 📧 Projet Webmail — Installation & Démarrage
 
 ## 1️⃣ Prérequis
 
-* **Python 3.10+** installé (vérifier avec `python --version`)
-* **pip** installé (vérifier avec `pip --version`)
-* Git (facultatif mais recommandé)
+* **Python 3.10+** installé
+  👉 Vérifier :
+
+  * Windows : `python --version`
+  * Linux/macOS : `python3 --version`
+
+* **pip** installé
+  👉 Vérifier :
+
+  * Windows : `pip --version`
+  * Linux/macOS : `pip3 --version`
+
+* **Git** (facultatif mais recommandé)
 
 ---
 
@@ -12,30 +28,43 @@
 
 Si vous travaillez depuis GitHub :
 
-```powershell
+```bash
 git clone <url-du-repo>
 cd projet-webmail
 ```
 
-Sinon, placez-vous dans le dossier de travail :
+Sinon, créez un dossier de travail :
 
-```powershell
-cd C:\Users\<username>\Documents\projet-webmail
-```
+* **Windows (PowerShell)**
+
+  ```powershell
+  cd C:\Users\<username>\Documents\projet-webmail
+  ```
+
+* **Linux/macOS (bash)**
+
+  ```bash
+  mkdir -p ~/Documents/projet-webmail
+  cd ~/Documents/projet-webmail
+  ```
 
 ---
 
 ## 3️⃣ Créer un environnement virtuel
 
-```powershell
-python -m venv venv
-```
+* **Windows (PowerShell)**
 
-Activer l’environnement :
+  ```powershell
+  python -m venv venv
+  venv\Scripts\activate
+  ```
 
-```powershell
-venv\Scripts\activate
-```
+* **Linux/macOS (bash)**
+
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
 
 👉 Vous devez voir `(venv)` devant votre invite de commande.
 
@@ -45,13 +74,13 @@ venv\Scripts\activate
 
 Si le fichier `requirements.txt` existe :
 
-```powershell
+```bash
 pip install -r requirements.txt
 ```
 
-Sinon, installez Django :
+Sinon, installez Django manuellement :
 
-```powershell
+```bash
 pip install django
 ```
 
@@ -59,19 +88,21 @@ pip install django
 
 ## 5️⃣ Créer le projet Django (si pas encore fait)
 
-```powershell
-python -m django startproject webmail_project
+```bash
+django-admin startproject webmail_project .
 ```
+
+⚠️ Le `.` à la fin permet de créer le projet **dans le dossier courant** sans créer un sous-dossier inutile.
 
 ---
 
 ## 6️⃣ Lancer le serveur
 
-Se placer dans le dossier du projet :
+Se placer dans le dossier du projet (si ce n’est pas déjà fait) :
 
-```powershell
-cd webmail_project
-python manage.py runserver
+```bash
+python manage.py runserver   # Windows
+python3 manage.py runserver  # Linux/macOS
 ```
 
 👉 Ouvrir [http://127.0.0.1:8000](http://127.0.0.1:8000) dans un navigateur.
@@ -81,7 +112,7 @@ Vous devriez voir la page de bienvenue Django 🎉
 
 ## 7️⃣ Créer les apps (si pas encore faites)
 
-```powershell
+```bash
 python manage.py startapp accounts
 python manage.py startapp mail
 ```
@@ -92,7 +123,7 @@ python manage.py startapp mail
 
 Avant la première exécution :
 
-```powershell
+```bash
 python manage.py makemigrations
 python manage.py migrate
 ```
@@ -101,24 +132,31 @@ python manage.py migrate
 
 ## 9️⃣ Créer un superutilisateur (admin)
 
-```powershell
+```bash
 python manage.py createsuperuser
 ```
 
 👉 Suivre les instructions (nom, email, mot de passe).
-
 Ensuite, accéder à l’admin :
 [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
 
 ---
 
-## 10️⃣ Ajouter une dépendance
+## 🔟 Ajouter une dépendance
 
 Si vous ajoutez une nouvelle librairie (ex: `pip install djangorestframework`), n’oubliez pas de mettre à jour `requirements.txt` :
 
-```powershell
+```bash
 pip freeze > requirements.txt
 ```
+
+---
+
+👉 Cette version est maintenant **100% compatible Windows et Linux**.
+Veux-tu que je t’ajoute aussi une section spéciale **Mac (brew + python3)** ou tu veux te limiter à Windows/Linux uniquement ?
+
+```
+Remarque : à Chaque fois que vous cloner, supprimer le venv et recréer le en ajoutant les dependances dans requirment.txt
 
 
 
