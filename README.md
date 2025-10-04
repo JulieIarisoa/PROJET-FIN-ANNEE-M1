@@ -1,4 +1,3 @@
----
 
 # 📧 Projet Webmail — Installation & Démarrage
 
@@ -150,10 +149,7 @@ pip install djangorestframework
 pip freeze > requirements.txt
 ```
 
----
+
 
 Remarque : à Chaque fois que vous cloner, supprimer le venv et recréer le en ajoutant les dependances dans requirment.txt
-
-
-
 Supprimer le venv à chaque clone et reinstalle le avec requirement.txt 
