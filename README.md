@@ -77,39 +77,7 @@ pip install django psycopg2-binary
 
 ---
 
-## 5️⃣ Créer la structure du projet Django
-
-Si le projet **n’existe pas encore** :
-
-```bash
-django-admin startproject WEB_MAIL .
-python manage.py startapp Appli_WEB_Mail
-```
-
-👉 Après ça, tu obtiendras la structure suivante :
-
-```
-PROJET-FIN-ANNEE-M1/
-│── venv/                  # environnement virtuel
-│── WEB_MAIL/              # projet Django
-│   ├── Appli_WEB_Mail/    # ton app principale
-│   │   ├── migrations/
-│   │   ├── templates/
-│   │   ├── admin.py
-│   │   ├── apps.py
-│   │   ├── models.py
-│   │   ├── views.py
-│   ├── settings.py
-│   ├── urls.py
-│   ├── wsgi.py
-│── manage.py
-│── requirements.txt
-│── db.sqlite3             # si tu utilises SQLite
-```
-
----
-
-## 6️⃣ Lancer le serveur
+## 5️⃣  Lancer le serveur
 
 ```bash
 python manage.py runserver   # Windows
@@ -120,7 +88,8 @@ python3 manage.py runserver  # Linux/macOS
 
 ---
 
-## 7️⃣ Migrer la base de données
+
+## 6️⃣Migrer la base de données
 
 ```bash
 python manage.py makemigrations
@@ -128,8 +97,7 @@ python manage.py migrate
 ```
 
 ---
-
-## 8️⃣ Créer un superutilisateur
+## 7️⃣ Créer un superutilisateur
 
 ```bash
 python manage.py createsuperuser
@@ -140,7 +108,7 @@ python manage.py createsuperuser
 
 ---
 
-## 9️⃣ Ajouter une nouvelle dépendance
+## 8️⃣ Ajouter une nouvelle dépendance
 
 Exemple :
 
@@ -148,6 +116,8 @@ Exemple :
 pip install djangorestframework
 pip freeze > requirements.txt
 ```
+
+## 9️⃣ à chaque fois que vous clonerais le projet, supprimer le venv et recréer le avec le requirement.txt
 
 
 
