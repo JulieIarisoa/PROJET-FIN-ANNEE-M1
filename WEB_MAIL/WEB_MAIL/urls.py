@@ -21,40 +21,30 @@ from Appli_WEB_Mail import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-      # 🏠 Page d'accueil
+    # 🌐 Pages HTML
     path('', views.base, name="base"),
+    path('acceuil/', views.accueil, name="acceuil"),
+    path('inbox/page/', views.inbox_page, name="inbox_page"),
+    path('sent/page/', views.sent_page, name="sent_page"),
+    path('drafts/page/', views.drafts_page, name="drafts_page"),
+    path('scheduled/page/', views.scheduled_page, name="scheduled_page"),
+    path('archive/page/', views.archive_page, name="archive_page"),
+    path('trash/page/', views.trash_page, name="trash_page"),
+    path('email/page/', views.email_detail_page, name="email_detail_page"),
 
-    # 🏠 Page d'accueil
-    path('acceuil/', views.acceuil, name="acceuil"),
-    
-#*********************************URLS Fifi*************************************
-    # 📩 Inbox
-    path('inbox/', views.inbox_view, name="inbox"),
-    path('inbox/unread_count/', views.unread_count_view, name="unread_count"),
+    # 🧠 API (pour Postman)
+     path('search/', views.search_view, name='search_page'),
+    path('inbox/', views.inbox_api, name="inbox_api"),
+    path('inbox/unread_count/', views.unread_count_api, name="unread_count_api"),
+    path('sent/<str:user_id>/', views.sent_api, name="sent_api"),
+    path('drafts/<str:user_id>/', views.drafts_api, name="drafts_api"),
+    path('scheduled/<str:user_id>/', views.scheduled_api, name="scheduled_api"),
+    path('archive/<str:user_id>/', views.archive_api, name="archive_api"),
+    path('trash/<str:user_id>/', views.trash_api, name="trash_api"),
+    path('toggle_read/<int:message_id>/', views.toggle_read_status_api, name="toggle_read_status_api"),
 
-    # 📨 Messages envoyés
-    path('sent/<int:user_id>/', views.sent_view, name="sent"),
+]
 
-    # 📝 Brouillons
-    path('drafts/<int:user_id>/', views.drafts_view, name="drafts"),
-
-    # ⏰ Planifiés
-    path('scheduled/<int:user_id>/', views.scheduled_view, name="scheduled"),
-
-    # 📂 Archivés
-    path('archive/<int:user_id>/', views.archive_view, name="archive"),
-
-    # 🗑️ Corbeille
-    path('trash/<int:user_id>/', views.trash_view, name="trash"),
-
-    # 👁️ Marquer comme lu/non lu
-    path('toggle_read/<int:message_id>/', views.toggle_read_status_view, name="toggle_read"),
-
-    # ✍️ Composer un nouveau message
-    path('compose/', views.compose_view, name="compose"),
-
-    # 📑 Détail d’un email
-    path('email/<int:message_id>/', views.email_detail_view, name="email_detail"),
 
    
 # Fonctionnalité	                    Méthode HTTP	URL à tester dans Postman
@@ -67,4 +57,4 @@ urlpatterns = [
 # Messages corbeille	                GET	            http://127.0.0.1:8000/trash/<user_id>/
 # Marquer un message comme lu/non lu	POST ou GET	    http://127.0.0.1:8000/toggle_read/<message_id>/ → exemple : http://127.0.0.1:8000/toggle_read/M001/
 #******************************Fin URLS Fifi*************************************
-]
+

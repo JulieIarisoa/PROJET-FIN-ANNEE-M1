@@ -1,49 +1,117 @@
 {% extends 'base.html' %} {% block content %}
-<h2 class="text-2xl font-bold mb-4">Inbox</h2>
+<h2 class="text-2xl font-bold mb-4">Boîte de réception</h2>
 
+<!-- Compteur messages non lus (déjà dans la sidebar mais on le garde ici aussi) -->
+<div class="flex justify-between items-center mb-4">
+  <p class="text-gray-600">
+    Messages non lus :
+    <span id="inbox-unread" class="font-semibold text-blue-600">0</span>
+  </p>
+</div>
+
+
+<!-- Onglets -->
+<div class="mb-4 border-b border-gray-300">
+  <nav class="flex space-x-4">
+    <button
+      id="tab-principale"
+      class="px-3 py-2 border-b-2 border-blue-500 text-blue-500 font-semibold"
+    >
+      Principale
+    </button>
+    <button
+      id="tab-notification"
+      class="px-3 py-2 border-b-2 border-transparent hover:border-gray-300 text-gray-600"
+    >
+      Notifications
+    </button>
+  </nav>
+</div>
+
+<!-- Tableau des messages -->
 <table class="min-w-full bg-white shadow-md rounded">
   <thead>
     <tr class="bg-gray-200">
       <th class="py-2 px-4 text-left">Expéditeur</th>
-      <th class="py-2 px-4 text-left">Sujet</th>
-      <th class="py-2 px-4 text-left">Date</th>
-      <th class="py-2 px-4 text-center">Statut</th>
+      <th class="py-2 px-4 text-left">Objet</th>
+      <th class="py-2 px-4 text-left">Catégorie</th>
+      <th class="py-2 px-4 text-left">Statut</th>
+      <th class="py-2 px-4 text-left">Date d'envoi</th>
+      <th class="py-2 px-4 text-center">Lu</th>
     </tr>
   </thead>
   <tbody id="inbox-table">
-    <!-- Les messages seront insérés ici via JS -->
+    <!-- Les messages seront insérés ici par JavaScript -->
   </tbody>
 </table>
 
 <script>
-  async function fetchInbox() {
-    const response = await fetch("/inbox/");
-    const messages = await response.json();
-    const tbody = document.getElementById("inbox-table");
-    tbody.innerHTML = "";
-    messages.forEach((msg) => {
-      tbody.innerHTML += `
+  let currentTab = "Principale";
+
+  // 📨 Fonction pour récupérer la liste des messages selon l'onglet
+  async function fetchInbox(tab = "Principale") {
+    try {
+      const response = await fetch(`/inbox/?categorie=${tab}`);
+      const messages = await response.json();
+      const tbody = document.getElementById("inbox-table");
+      tbody.innerHTML = "";
+
+      messages.forEach((msg) => {
+        tbody.innerHTML += `
         <tr class="border-b hover:bg-gray-100 cursor-pointer" onclick="window.location='/email/${
           msg.id_message
         }/'">
-            <td class="py-2 px-4">${msg.expediteur}</td>
-            <td class="py-2 px-4">${msg.sujet}</td>
-            <td class="py-2 px-4">${msg.date_envoi}</td>
-            <td class="py-2 px-4 text-center">
-                ${msg.est_lu ? "✅ Lu" : "📬 Non lu"}
-            </td>
+          <td class="py-2 px-4">${msg.expediteur_id}</td>
+          <td class="py-2 px-4">${msg.objet}</td>
+          <td class="py-2 px-4">${msg.categorie}</td>
+          <td class="py-2 px-4">${msg.status}</td>
+          <td class="py-2 px-4">${new Date(
+            msg.date_envoie
+          ).toLocaleString()}</td>
+          <td class="py-2 px-4 text-center">${msg.est_lu ? "✅" : "📬"}</td>
         </tr>
-        `;
-    });
+      `;
+      });
+    } catch (error) {
+      console.error("Erreur lors du chargement des messages :", error);
+    }
   }
 
+  // 🔄 Fonction pour compter les messages non lus
   async function fetchUnreadCount() {
-    const response = await fetch("/inbox/unread_count/");
-    const data = await response.json();
-    document.getElementById("inbox-unread").textContent = data.unread_count;
+    try {
+      const response = await fetch("/inbox/unread_count/");
+      const data = await response.json();
+      document.getElementById("inbox-unread").textContent = data.unread_count;
+    } catch (error) {
+      console.error("Erreur lors du comptage :", error);
+    }
   }
 
-  fetchInbox();
+  // 🚀 Gestion des onglets
+  document.getElementById("tab-principale").addEventListener("click", () => {
+    currentTab = "Principale";
+    fetchInbox(currentTab);
+    document
+      .getElementById("tab-principale")
+      .classList.add("border-blue-500", "text-blue-500");
+    document
+      .getElementById("tab-notification")
+      .classList.remove("border-blue-500", "text-blue-500");
+  });
+  document.getElementById("tab-notification").addEventListener("click", () => {
+    currentTab = "Notification";
+    fetchInbox(currentTab);
+    document
+      .getElementById("tab-notification")
+      .classList.add("border-blue-500", "text-blue-500");
+    document
+      .getElementById("tab-principale")
+      .classList.remove("border-blue-500", "text-blue-500");
+  });
+
+  // 🔥 Initialisation
+  fetchInbox(currentTab);
   fetchUnreadCount();
 </script>
 {% endblock %}

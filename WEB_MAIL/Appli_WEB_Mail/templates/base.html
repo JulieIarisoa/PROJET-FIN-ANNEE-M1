@@ -9,50 +9,43 @@
     <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-md p-4 flex flex-col">
       <h1 class="text-xl font-bold mb-6">WebMail</h1>
-
       <nav class="flex flex-col space-y-2">
-        <a
-          href="/inbox/"
-          class="p-2 hover:bg-gray-200 rounded flex justify-between items-center"
-        >
+        <a href="{% url 'inbox_page' %}" class="p-2 hover:bg-gray-200 rounded flex justify-between items-center">
           <span>📩 Inbox</span>
-          <span
-            id="inbox-unread"
-            class="bg-red-500 text-white rounded-full px-2 text-sm"
-            >0</span
-          >
+          <span id="inbox-unread" class="bg-red-500 text-white rounded-full px-2 text-sm">0</span>
         </a>
-        <a href="/sent/U001/" class="p-2 hover:bg-gray-200 rounded"
-          >📤 Envoyés</a
-        >
-        <a href="/drafts/U001/" class="p-2 hover:bg-gray-200 rounded"
-          >📝 Brouillons</a
-        >
-        <a href="/scheduled/U001/" class="p-2 hover:bg-gray-200 rounded"
-          >⏰ Planifiés</a
-        >
-        <a href="/archive/U001/" class="p-2 hover:bg-gray-200 rounded"
-          >📂 Archivés</a
-        >
-        <a href="/trash/U001/" class="p-2 hover:bg-gray-200 rounded"
-          >🗑️ Corbeille</a
-        >
-        <a
-          href="/compose/"
-          class="mt-4 p-2 bg-blue-500 text-white rounded text-center hover:bg-blue-600"
-          >✍️ Composer</a
-        >
+        <a href="{% url 'sent_page' %}" class="p-2 hover:bg-gray-200 rounded">📤 Envoyés</a>
+        <a href="{% url 'drafts_page' %}" class="p-2 hover:bg-gray-200 rounded">📝 Brouillons</a>
+        <a href="{% url 'scheduled_page' %}" class="p-2 hover:bg-gray-200 rounded">⏰ Planifiés</a>
+        <a href="{% url 'archive_page' %}" class="p-2 hover:bg-gray-200 rounded">📂 Archivés</a>
+        <a href="{% url 'trash_page' %}" class="p-2 hover:bg-gray-200 rounded">🗑️ Corbeille</a>
+        <a href="/compose/" class="mt-4 p-2 bg-blue-500 text-white rounded text-center hover:bg-blue-600">✍️ Composer</a>
       </nav>
     </aside>
 
     <!-- Main content -->
     <main class="flex-1 p-6">
+      <!-- Barre de recherche -->
+      <div class="mb-6">
+        <form id="searchForm" class="flex space-x-2" method="GET" action="{% url 'search_page' %}">
+          <input type="text" name="query" placeholder="Rechercher dans les messages..."
+                 class="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <select name="filter" class="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="all">Tous</option>
+            <option value="subject">Objet</option>
+            <option value="sender">Expéditeur</option>
+            <option value="body">Contenu</option>
+          </select>
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">🔍 Rechercher</button>
+        </form>
+      </div>
+
       {% block content %}
       <!-- Contenu spécifique de chaque page -->
       {% endblock %}
     </main>
+
     <script>
-      // ⚡ Met à jour le badge de messages non lus
       async function updateUnreadBadge() {
         try {
           const response = await fetch("/inbox/unread_count/");
@@ -64,14 +57,9 @@
             badge.classList.toggle("hidden", data.unread_count === 0);
           }
         } catch (err) {
-          console.error(
-            "Impossible de récupérer le nombre de messages non lus :",
-            err
-          );
+          console.error("Impossible de récupérer le nombre de messages non lus :", err);
         }
       }
-
-      // ⚡ Rafraîchit toutes les 30 secondes
       updateUnreadBadge();
       setInterval(updateUnreadBadge, 30000);
     </script>
